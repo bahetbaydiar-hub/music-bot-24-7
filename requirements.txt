@@ -1,0 +1,3 @@
+aiogram==3.24.0
+yt-dlp==2024.11.10
+aiofiles==23.2.1
