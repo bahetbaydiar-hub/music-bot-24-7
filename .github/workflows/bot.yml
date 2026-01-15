@@ -1,0 +1,33 @@
+name: Telegram Music Bot 24/7
+
+on:
+  workflow_dispatch:  # Ручной запуск
+  schedule:
+    - cron: '*/5 * * * *'  # Запускать каждые 5 минут
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350  # Почти 6 часов
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        
+    - name: Run Telegram Bot
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      run: |
+        echo "🚀 Запускаю бота на GitHub Actions..."
+        echo "⏰ Время работы: 5 часов 50 минут"
+        timeout 350m python bot.py || true
+        echo "🔄 Сессия завершена, перезапуск через 5 минут..."
